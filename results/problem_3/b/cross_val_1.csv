@@ -1,0 +1,8 @@
+0.01,30,0.01,"tensor(0.5931, device='cuda:0')"
+0.01,100,0.01,"tensor(0.5849, device='cuda:0')"
+0.01,30,0.001,"tensor(0.5838, device='cuda:0')"
+0.01,100,0.001,"tensor(1.0081, device='cuda:0')"
+0.1,30,0.01,"tensor(0.6218, device='cuda:0')"
+0.1,100,0.01,"tensor(0.6157, device='cuda:0')"
+0.1,30,0.001,"tensor(0.6130, device='cuda:0')"
+0.1,100,0.001,"tensor(0.6126, device='cuda:0')"

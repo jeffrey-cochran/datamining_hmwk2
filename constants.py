@@ -1,0 +1,2 @@
+DECREASE = 0
+COSINE = 1
