@@ -1,2 +1,5 @@
 DECREASE = 0
 COSINE = 1
+
+TRAIN = 0
+TEST = 1
