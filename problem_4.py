@@ -25,8 +25,8 @@ my_transform = torchvision.transforms.Compose([
 # Load training data
 MNIST_Data = DataStreamer(
     torchvision.datasets.MNIST(
-        "/data/test", 
-        download=False, 
+        "./data/test", 
+        download=True, 
         train=True, 
         transform=my_transform,
         target_transform=OneHOT()
@@ -36,8 +36,8 @@ MNIST_Data = DataStreamer(
 # Load test data
 MNIST_Data_test = DataStreamer(
     torchvision.datasets.MNIST(
-        "/data/test", 
-        download=False, 
+        "./data/test", 
+        download=True, 
         train=False, 
         transform=my_transform,
         target_transform=OneHOT()
@@ -47,7 +47,7 @@ MNIST_Data_test = DataStreamer(
 # Set tolerance and step size
 # terminate when loss improvement is
 # relatively small
-batch_size = 100
+batch_size = 60000
 ridge_coeff = 0.01
 max_iter= 1000
 dynamic_stepper = DynamicStepSize(0.01, method=-1)
@@ -71,6 +71,7 @@ with open(fname, "w", newline="") as f:
     train_loss = L(MNIST_Data.X, MNIST_Data.Y)
     train_loss_delta = train_loss
     while eval_counter <= max_iter:
+        print(eval_counter)
         #
         # Iterate over batches
         for (x, y) in MNIST_Data:

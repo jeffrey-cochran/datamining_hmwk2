@@ -1,6 +1,7 @@
 import csv
 import pandas as pd
 import matplotlib.pyplot as plt
+from numpy import log
 from constants import TRAIN, TEST
 
 class Series(object):
@@ -35,6 +36,24 @@ class Series(object):
 
         return
 
-    def plot(self, ax):
-        ax.plot(self.x, self.y,label=self.label)
+    def plot(self, ax, linestyle=None, linewidth=1, color=None, use_log_y=False):
+        if use_log_y:
+            ax.plot(
+                self.x, 
+                log(self.y),
+                label=self.label, 
+                linestyle=linestyle,
+                linewidth=linewidth,
+                color=color
+            )
+        else:
+            ax.plot(
+                self.x, 
+                self.y,
+                label=self.label, 
+                linestyle=linestyle,
+                linewidth=linewidth,
+                color=color
+            )
+
         return

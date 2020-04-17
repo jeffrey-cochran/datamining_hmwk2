@@ -26,7 +26,7 @@ my_transform = torchvision.transforms.Compose([
 MNIST_Data = DataStreamer(
     data=torchvision.datasets.MNIST(
         "/data/test", 
-        download=False, 
+        download=True, 
         train=True, 
         transform=my_transform,
         target_transform=OneHOT()
@@ -37,7 +37,7 @@ MNIST_Data = DataStreamer(
 MNIST_Data_test = DataStreamer(
     data=torchvision.datasets.MNIST(
         "/data/test", 
-        download=False, 
+        download=True, 
         train=False, 
         transform=my_transform,
         target_transform=OneHOT()
@@ -50,7 +50,7 @@ MNIST_Data_test = DataStreamer(
 max_iter= 500
 #
 # Set params
-batch_size=100
+batch_size=60000
 ridge_coeff=0.01
 step_size=0.001
 #
@@ -65,19 +65,6 @@ L = LossFunction(F, ridge_coeff=ridge_coeff)
 # Iterate to convergence
 eval_counter = 0
 while eval_counter <= max_iter:
-    #
-    # Iterate over batches
-    for (x, y) in MNIST_Data:
-        #
-        # Compute gradient and gradient norm
-        grad_W, grad_w0 = L.gradient(x, y)
-        cuda.synchronize()
-        #
-        # Update weights
-        cuda.synchronize()
-        F.update(grad_W, grad_w0, step_size)
-    #
-    eval_counter += 1
     #
     # Create CSV file for data collection
     fname = f"batch_size_{batch_size:1.0e}_step_size_{step_size:1.0e}_ridge_coeff_{ridge_coeff:1.0e}.csv"
@@ -95,3 +82,15 @@ while eval_counter <= max_iter:
         ])
         #
     #
+    # Iterate over batches
+    for (x, y) in MNIST_Data:
+        #
+        # Compute gradient and gradient norm
+        grad_W, grad_w0 = L.gradient(x, y)
+        cuda.synchronize()
+        #
+        # Update weights
+        cuda.synchronize()
+        F.update(grad_W, grad_w0, step_size)
+    #
+    eval_counter += 1
